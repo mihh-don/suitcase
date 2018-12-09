@@ -11,5 +11,4 @@ Let's take it step by step...
 
 
 
-
-** No Licence is provided. You can only fork and view this project **
+** GNU GPLv2 License is provided for this project **
