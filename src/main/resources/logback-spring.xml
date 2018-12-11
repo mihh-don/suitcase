@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <property name="LOGS" value="/app/log" />
+    <property name="driver" value="com.mysql.cj.jdbc.Driver" />
+    <property name="datasourceUrl" value="jdbc:mysql://mysql:3306/suitcase" />
+    <property name="user" value="user" />
+    <property name="password" value="myUser" />
+
+    <appender name="RollingFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/suitcase.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                <!-- Date - [Level] [Classname of max length 40 with right padding] [Thread] Message\n -->
+                %d - [%p] [%-40C{40}] [%t] %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOGS}/archived/suitcase.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+    </appender>
+
+    <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>${driver}</driverClass>
+            <url>${datasourceUrl}</url>
+            <user>${user}</user>
+            <password>${password}</password>
+        </connectionSource>
+    </appender>
+
+    <!-- LOG everything at INFO level for the Log File -->
+    <root level="info">
+        <appender-ref ref="RollingFile" />
+    </root>
+
+    <!-- LOG WARN and higher level to the MySQL DB -->
+    <logger name="org.springframework" level="warn">
+        <appender-ref ref="DB" />
+    </logger>
+
+    <!-- TODO Logging configuration for the suitcase application -->
+    <logger name="hello" level="info" additivity="false">
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="DB" />
+    </logger>
+
+</configuration>
