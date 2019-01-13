@@ -2,7 +2,7 @@
 <configuration debug="true">
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
-    <property name="LOGS" value="/Users/mihnea/Documents/workspace/Java/suitcase/log" />
+    <property name="LOGS" value="/Users/mihnea/Documents/workspace/Java/suitcase/test-log" />
 
     <appender name="RollingFile"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
