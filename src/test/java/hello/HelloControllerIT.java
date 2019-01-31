@@ -39,14 +39,6 @@ public class HelloControllerIT {
     }
 
     @Test
-    public void getHello() throws Exception {
-        ResponseEntity<String> response = restTemplate.getForEntity(this.base.toURI(), String.class);
-        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-        assertThat(response.getBody(), equalTo("Hello Spring Boot!"));
-        logger.debug("Hello Spring Boot!");
-    }
-
-    @Test
     public void getAllUsers() throws Exception {
         ResponseEntity<String> response = restTemplate.getForEntity(this.base.toURI() + "demo/all", String.class);
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
