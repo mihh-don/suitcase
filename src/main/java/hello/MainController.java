@@ -7,14 +7,12 @@ package hello;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import hello.User;
-import hello.UserRepository;
 
 @Controller    // This means that this class is a Controller
 @RequestMapping(path="/demo") // This means URL's start with /demo (after Application path)
@@ -34,9 +32,17 @@ public class MainController {
         User n = new User();
         n.setName(name);
         n.setEmail(email);
-        userRepository.save(n);
-        logger.info("Saved user " + name);
-        return "Saved";
+        try {
+            userRepository.save(n);
+            logger.info("Saved user {}", name);
+            return "Saved";
+        } catch (DataIntegrityViolationException ex) {
+            logger.error(ex.getMessage());
+            return "User already exists";
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            return "Error: " + ex.getMessage();
+        }
     }
 
     @GetMapping(path="/all")
