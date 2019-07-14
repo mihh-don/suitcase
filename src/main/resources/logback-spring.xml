@@ -50,7 +50,7 @@
     </logger>
 
     <!-- TODO Logging configuration for the suitcase application -->
-    <logger name="hello" level="info" additivity="false">
+    <logger name="com.suitcase" level="info" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="DB" />
     </logger>

@@ -1,4 +1,4 @@
-package hello;
+package com.suitcase.users;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

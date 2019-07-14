@@ -1,4 +1,4 @@
-package hello;
+package com.suitcase.config;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class HelloControllerIT {
 
     @Test
     public void getAllUsers() throws Exception {
-        ResponseEntity<String> response = restTemplate.getForEntity(this.base.toURI() + "demo/all", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(this.base.toURI() + "users/all", String.class);
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
         logger.debug("All users received!");
     }
