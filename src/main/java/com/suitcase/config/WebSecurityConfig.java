@@ -1,4 +1,4 @@
-package hello;
+package com.suitcase.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/demo/*", "/actuator", "/actuator/*").permitAll()
+                .antMatchers("/", "/home", "/actuator", "/actuator/*", "/users/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
