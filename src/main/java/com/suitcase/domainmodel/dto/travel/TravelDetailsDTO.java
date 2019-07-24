@@ -11,7 +11,6 @@ import java.util.Set;
 
 public class TravelDetailsDTO extends AbstractEntityDTO {
 
-    private String name;
     @NotNull
     private ZonedDateTime startDate;
     private ZonedDateTime endDate;
@@ -20,13 +19,6 @@ public class TravelDetailsDTO extends AbstractEntityDTO {
     private TravelPurposeEnum travelPurpose;
     private Set<TravelTransportCarrierDTO> travelTransportCarriers;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public ZonedDateTime getStartDate() {
         return startDate;
@@ -81,8 +73,7 @@ public class TravelDetailsDTO extends AbstractEntityDTO {
         if (this == o) return true;
         if (!(o instanceof TravelDetailsDTO)) return false;
         TravelDetailsDTO that = (TravelDetailsDTO) o;
-        return Objects.equals(getName(), that.getName()) &&
-                Objects.equals(getStartDate(), that.getStartDate()) &&
+        return Objects.equals(getStartDate(), that.getStartDate()) &&
                 Objects.equals(getEndDate(), that.getEndDate()) &&
                 Objects.equals(getLastNotificationDate(), that.getLastNotificationDate()) &&
                 getSeason() == that.getSeason() &&
@@ -92,6 +83,6 @@ public class TravelDetailsDTO extends AbstractEntityDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getStartDate(), getEndDate(), getLastNotificationDate(), getSeason(), getTravelPurpose(), getTravelTransportCarriers());
+        return Objects.hash(getStartDate(), getEndDate(), getLastNotificationDate(), getSeason(), getTravelPurpose(), getTravelTransportCarriers());
     }
 }

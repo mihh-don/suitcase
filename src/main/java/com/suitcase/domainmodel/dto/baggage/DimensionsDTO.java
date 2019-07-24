@@ -60,4 +60,36 @@ public class DimensionsDTO implements Serializable {
     public int hashCode() {
         return Objects.hash(getWidth(), getHeight(), getDepth(), getCombinedDimensionsLength());
     }
+
+    public static class Builder {
+        private DimensionsDTO dimensionsDTO;
+
+        public Builder() {
+            dimensionsDTO = new DimensionsDTO();
+        }
+
+        public Builder withWidth(BigDecimal width) {
+            dimensionsDTO.setWidth(width);
+            return this;
+        }
+
+        public Builder withHeight(BigDecimal height) {
+            dimensionsDTO.setHeight(height);
+            return this;
+        }
+
+        public Builder withDepth(BigDecimal depth) {
+            dimensionsDTO.setDepth(depth);
+            return this;
+        }
+
+        public Builder withCombinedDimensionsLength(BigDecimal combinedDimensionsLength) {
+            dimensionsDTO.setCombinedDimensionsLength(combinedDimensionsLength);
+            return this;
+        }
+
+        public DimensionsDTO build() {
+            return dimensionsDTO;
+        }
+    }
 }

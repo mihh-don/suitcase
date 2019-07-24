@@ -24,17 +24,17 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/add") // Map ONLY GET Requests
-    public @ResponseBody String addNewUser (@RequestParam String name
+    public @ResponseBody String addNewUser (@RequestParam String username
             , @RequestParam String email) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
         User n = new User();
-        n.setName(name);
+        n.setUsername(username);
         n.setEmail(email);
         try {
             userRepository.save(n);
-            logger.info("Saved user {}", name);
+            logger.info("Saved user {}", username);
             return "Saved";
         } catch (DataIntegrityViolationException ex) {
             logger.error(ex.getMessage());

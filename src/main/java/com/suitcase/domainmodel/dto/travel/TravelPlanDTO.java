@@ -10,10 +10,20 @@ import java.util.Set;
 public class TravelPlanDTO extends AbstractEntityDTO {
 
     @NotNull
+    private String name;
+    @NotNull
     private UserDTO user;
     // all the items which are taken within this Travel Plan
     private Set<TravelBaggageItemDTO> travelBaggageItems;
     private TravelDetailsDTO travelDetails;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Set<TravelBaggageItemDTO> getTravelBaggageItems() {
         return travelBaggageItems;
@@ -44,13 +54,14 @@ public class TravelPlanDTO extends AbstractEntityDTO {
         if (this == o) return true;
         if (!(o instanceof TravelPlanDTO)) return false;
         TravelPlanDTO that = (TravelPlanDTO) o;
-        return Objects.equals(getTravelBaggageItems(), that.getTravelBaggageItems()) &&
+        return Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getTravelBaggageItems(), that.getTravelBaggageItems()) &&
                 getUser().equals(that.getUser()) &&
                 Objects.equals(getTravelDetails(), that.getTravelDetails());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTravelBaggageItems(), getUser(), getTravelDetails());
+        return Objects.hash(getName(), getTravelBaggageItems(), getUser(), getTravelDetails());
     }
 }

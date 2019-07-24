@@ -2,7 +2,7 @@ package com.suitcase.domainmodel.dto.enums;
 
 public enum BaggageItemCategoryEnum {
     SHOES("Shoes"),
-    TOILETRIES("Toiletries"),
+    TOILETRIES("Toiletries & cosmetics"),
     BAGS("Bags, Backpacks & Suitcases"),
     MEDICINE("Medicine"),
     MEDICAL_DEVICES("Medical devices"),

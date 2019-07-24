@@ -51,4 +51,31 @@ public class ColorDTO implements Serializable {
     public int hashCode() {
         return Objects.hash(getColorCombination(), getPrimaryColor(), getSecondaryColor());
     }
+
+    public static class Builder {
+        private ColorDTO colorDTO;
+
+        public Builder() {
+            colorDTO = new ColorDTO();
+        }
+
+        public Builder withColorCombination(ColorCombinationEnum colorCombination) {
+            colorDTO.setColorCombination(colorCombination);
+            return this;
+        }
+
+        public Builder withPrimaryColor(BasicColorEnum primaryColor) {
+            colorDTO.setPrimaryColor(primaryColor);
+            return this;
+        }
+
+        public Builder withSecondaryColor(BasicColorEnum secondaryColor) {
+            colorDTO.setSecondaryColor(secondaryColor);
+            return this;
+        }
+
+        public ColorDTO build() {
+            return colorDTO;
+        }
+    }
 }

@@ -16,9 +16,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        /*http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/actuator", "/actuator/*", "/users/*").permitAll()
+                .antMatchers("/", "/home", "/actuator", "/actuator/*", "/users/*", "/travel/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                .permitAll();*/
     }
 
     @Bean

@@ -8,10 +8,10 @@ import com.suitcase.domainmodel.dto.enums.BaggageItemPriorityEnum;
 import com.suitcase.domainmodel.dto.enums.BaggageItemTypeEnum;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class BaggageItemDTO extends AbstractEntityDTO {
 
@@ -28,14 +28,24 @@ public class BaggageItemDTO extends AbstractEntityDTO {
     private BigDecimal weight;
     private BigInteger pieces;
     private ColorDTO color;
+    @NotNull
+    @Size(min = 1)
     private Set<UserDTO> owners;
+
+    public BaggageItemDTO() {
+        name = "";
+        baggageCategory = BaggageItemCategoryEnum.OTHERS;
+        baggageType = BaggageItemTypeEnum.OTHER;
+        defaultBaggagePriority = BaggageItemPriorityEnum.NOT_APPLICABLE;
+        owners = new HashSet<>();
+    }
 
     public Set<UserDTO> getOwners() {
         return owners;
     }
 
-    public void setOwners(Set<UserDTO> owners) {
-        this.owners = owners;
+    public void addOwner(UserDTO owner) {
+        this.owners.add(owner);
     }
 
     public String getName() {
@@ -127,5 +137,67 @@ public class BaggageItemDTO extends AbstractEntityDTO {
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getBaggageCategory(), getBaggageType(), getDefaultBaggagePriority(), getDimensions(), getWeight(), getColor());
+    }
+
+    public static class Builder {
+        private BaggageItemDTO baggageItemDTO;
+
+        public Builder() {
+            baggageItemDTO = new BaggageItemDTO();
+        }
+
+        public Builder withOwners(Set<UserDTO> owners) {
+            Optional.ofNullable(owners).orElseGet(Collections::emptySet).forEach(baggageItemDTO::addOwner);
+            return this;
+        }
+
+        public Builder withName(String name) {
+            baggageItemDTO.setName(name);
+            return this;
+        }
+
+        public Builder withBaggageCategory(BaggageItemCategoryEnum baggageCategory) {
+            baggageItemDTO.setBaggageCategory(baggageCategory);
+            return this;
+        }
+
+        public Builder withBaggageType(BaggageItemTypeEnum baggageType) {
+            baggageItemDTO.setBaggageType(baggageType);
+            return this;
+        }
+
+        public Builder withDescription(String description) {
+            baggageItemDTO.setDescription(description);
+            return this;
+        }
+
+        public Builder withDimensions(DimensionsDTO dimensions) {
+            baggageItemDTO.setDimensions(dimensions);
+            return this;
+        }
+
+        public Builder withWeight(BigDecimal weight) {
+            baggageItemDTO.setWeight(weight);
+            return this;
+        }
+
+        public Builder withPieces(BigInteger pieces) {
+            baggageItemDTO.setPieces(pieces);
+            return this;
+        }
+
+        public Builder withColor(ColorDTO color) {
+            baggageItemDTO.setColor(color);
+            return this;
+        }
+
+        public Builder withDefaultBaggagePriority(BaggageItemPriorityEnum defaultBaggagePriority) {
+            baggageItemDTO.setDefaultBaggagePriority(defaultBaggagePriority);
+            return this;
+        }
+
+        public BaggageItemDTO build() {
+            return baggageItemDTO;
+        }
     }
 }
