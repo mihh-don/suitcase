@@ -52,4 +52,31 @@ public class TravelTransportCarrierDTO extends AbstractEntityDTO {
     public int hashCode() {
         return Objects.hash(getTransportCarrier(), getTravelClass(), getSequence());
     }
+
+    public static class Builder {
+        private TravelTransportCarrierDTO travelTransportCarrierDTO;
+
+        public Builder() {
+            travelTransportCarrierDTO = new TravelTransportCarrierDTO();
+        }
+
+        public Builder withTransportCarrier(TransportCarrierDTO transportCarrier) {
+            travelTransportCarrierDTO.setTransportCarrier(transportCarrier);
+            return this;
+        }
+
+        public Builder withTravelClass(TravelClassEnum travelClass) {
+            travelTransportCarrierDTO.setTravelClass(travelClass);
+            return this;
+        }
+
+        public Builder withSequence(int sequence) {
+            travelTransportCarrierDTO.setSequence(sequence);
+            return this;
+        }
+
+        public TravelTransportCarrierDTO build() {
+            return travelTransportCarrierDTO;
+        }
+    }
 }

@@ -64,4 +64,36 @@ public class TransportCarrierDTO extends AbstractEntityDTO {
     public int hashCode() {
         return Objects.hash(getName(), getMeanOfTransport(), getBaggagePolicies(), getAllTravelClasses());
     }
+
+    public static class Builder {
+        private TransportCarrierDTO transportCarrierDTO;
+
+        public Builder() {
+            transportCarrierDTO = new TransportCarrierDTO();
+        }
+
+        public Builder withAllTravelClasses(Set<TravelClassEnum> allTravelClasses) {
+            transportCarrierDTO.setAllTravelClasses(allTravelClasses);
+            return this;
+        }
+
+        public Builder withName(String name) {
+            transportCarrierDTO.setName(name);
+            return this;
+        }
+
+        public Builder withMeanOfTransport(TransportMeansEnum meanOfTransport) {
+            transportCarrierDTO.setMeanOfTransport(meanOfTransport);
+            return this;
+        }
+
+        public Builder withBaggagePolicies(Set<TransportCarrierBaggagePolicyDTO> baggagePolicies) {
+            transportCarrierDTO.setBaggagePolicies(baggagePolicies);
+            return this;
+        }
+
+        public TransportCarrierDTO build() {
+            return transportCarrierDTO;
+        }
+    }
 }

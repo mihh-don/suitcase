@@ -200,4 +200,20 @@ public class BaggageItemDTO extends AbstractEntityDTO {
             return baggageItemDTO;
         }
     }
+
+    @Override
+    public String toString() {
+        return "BaggageItemDTO{" +
+                "name='" + name + '\'' +
+                ", baggageCategory=" + baggageCategory +
+                ", baggageType=" + baggageType +
+                ", defaultBaggagePriority=" + defaultBaggagePriority +
+                ", description='" + description + '\'' +
+                ", dimensions=" + dimensions +
+                ", weight=" + weight +
+                ", pieces=" + pieces +
+                ", color=" + color +
+                ", owners=" + owners +
+                '}';
+    }
 }

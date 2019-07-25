@@ -54,6 +54,9 @@ public class TravelPlanDTO extends AbstractEntityDTO {
         if (this == o) return true;
         if (!(o instanceof TravelPlanDTO)) return false;
         TravelPlanDTO that = (TravelPlanDTO) o;
+        if (getId() != null && getId().equals(that.getId())) {
+            return true;
+        }
         return Objects.equals(getName(), that.getName()) &&
                 Objects.equals(getTravelBaggageItems(), that.getTravelBaggageItems()) &&
                 getUser().equals(that.getUser()) &&
@@ -63,5 +66,37 @@ public class TravelPlanDTO extends AbstractEntityDTO {
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getTravelBaggageItems(), getUser(), getTravelDetails());
+    }
+
+    public static class Builder {
+        private TravelPlanDTO travelPlanDTO;
+
+        public Builder() {
+            travelPlanDTO = new TravelPlanDTO();
+        }
+
+        public Builder withName(String name) {
+            travelPlanDTO.setName(name);
+            return this;
+        }
+
+        public Builder withTravelBaggageItems(Set<TravelBaggageItemDTO> travelBaggageItems) {
+            travelPlanDTO.setTravelBaggageItems(travelBaggageItems);
+            return this;
+        }
+
+        public Builder withUser(UserDTO user) {
+            travelPlanDTO.setUser(user);
+            return this;
+        }
+
+        public Builder withTravelDetails(TravelDetailsDTO travelDetails) {
+            travelPlanDTO.setTravelDetails(travelDetails);
+            return this;
+        }
+
+        public TravelPlanDTO build() {
+            return travelPlanDTO;
+        }
     }
 }

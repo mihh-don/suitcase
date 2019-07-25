@@ -54,6 +54,8 @@ public class UserDTO extends AbstractEntityDTO {
 
     public void setTravelPlans(Set<TravelPlanDTO> travelPlans) {
         this.travelPlans = travelPlans;
+        Optional.ofNullable(travelPlans).orElseGet(Collections::emptySet)
+                .forEach(travelPlanDTO -> travelPlanDTO.setUser(this));
     }
 
     public Set<BaggageItemDTO> getBaggageItems() {
@@ -62,7 +64,8 @@ public class UserDTO extends AbstractEntityDTO {
 
     public void setBaggageItems(Set<BaggageItemDTO> baggageItems) {
         this.baggageItems = baggageItems;
-        Optional.ofNullable(baggageItems).orElseGet(Collections::emptySet).forEach(baggageItemDTO -> baggageItemDTO.addOwner(this));
+        Optional.ofNullable(baggageItems).orElseGet(Collections::emptySet)
+                .forEach(baggageItemDTO -> baggageItemDTO.addOwner(this));
     }
 
     @JsonIgnore
@@ -75,7 +78,7 @@ public class UserDTO extends AbstractEntityDTO {
         if (this == o) return true;
         if (!(o instanceof UserDTO)) return false;
         UserDTO userDTO = (UserDTO) o;
-        if (getId().equals(userDTO.getId())) {
+        if (getId() != null && getId().equals(userDTO.getId())) {
             return true;
         }
         return getUsername().equals(userDTO.getUsername()) &&

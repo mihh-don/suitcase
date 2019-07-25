@@ -85,4 +85,46 @@ public class TravelDetailsDTO extends AbstractEntityDTO {
     public int hashCode() {
         return Objects.hash(getStartDate(), getEndDate(), getLastNotificationDate(), getSeason(), getTravelPurpose(), getTravelTransportCarriers());
     }
+
+    public static class Builder {
+        private TravelDetailsDTO travelDetailsDTO;
+
+        public Builder() {
+            travelDetailsDTO = new TravelDetailsDTO();
+        }
+
+        public Builder withStartDate(ZonedDateTime startDate) {
+            travelDetailsDTO.setStartDate(startDate);
+            return this;
+        }
+
+        public Builder withEndDate(ZonedDateTime endDate) {
+            travelDetailsDTO.setEndDate(endDate);
+            return this;
+        }
+
+        public Builder withLastNotificationDate(ZonedDateTime lastNotificationDate) {
+            travelDetailsDTO.setLastNotificationDate(lastNotificationDate);
+            return this;
+        }
+
+        public Builder withSeason(SeasonEnum season) {
+            travelDetailsDTO.setSeason(season);
+            return this;
+        }
+
+        public Builder withTravelPurpose(TravelPurposeEnum travelPurpose) {
+            travelDetailsDTO.setTravelPurpose(travelPurpose);
+            return this;
+        }
+
+        public Builder withTravelTransportCarriers(Set<TravelTransportCarrierDTO> travelTransportCarriers) {
+            travelDetailsDTO.setTravelTransportCarriers(travelTransportCarriers);
+            return this;
+        }
+
+        public TravelDetailsDTO build() {
+            return travelDetailsDTO;
+        }
+    }
 }

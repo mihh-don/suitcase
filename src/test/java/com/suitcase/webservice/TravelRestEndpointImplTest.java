@@ -1,98 +1,135 @@
 package com.suitcase.webservice;
 
-import com.suitcase.domainmodel.dto.UserDTO;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import com.suitcase.domainmodel.dto.baggage.BaggageItemDTO;
+import com.suitcase.domainmodel.dto.travel.TravelPlanDTO;
+import com.suitcase.service.TravelService;
+import com.suitcase.utils.BaggageItemsArgumentsProvider;
+import com.suitcase.utils.TravelPlansArgumentsProvider;
+import com.suitcase.utils.UserArgumentsProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
-import static com.suitcase.webservice.TravelRestEndpointImplHelper.buildUsers;
-import static com.suitcase.webservice.TravelRestEndpointImplHelper.getBaggageItemsNames;
+import static com.suitcase.utils.ResponseEntityMatchers.*;
+import static com.suitcase.utils.TravelRestEndpointImplHelper.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class TravelRestEndpointImplTest {
 
+    private static final String SOME_USER = "someuser";
+    private static final String SOME_BAGGAGE = "somebaggage";
+    private static final String SOME_VALUE = "somevalue";
+    private static final String EMPTY_STRING = "";
+
+    @Mock
+    private TravelService travelService;
+
     @InjectMocks
     private TravelRestEndpointImpl restEndpoint;
-    private UserDTO user1;
-    private UserDTO user2;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        List<UserDTO> users = buildUsers();
-        user1 = users.get(0);
-        user2 = users.get(1);
     }
 
-    @Test
-    void allUserBaggageItemsNamesShouldReturnErrorResponseForNullUsername() {
-        assertThat(restEndpoint.allUserBaggageItemsNames(null), matchesErrorResponse());
+    @ParameterizedTest
+    @MethodSource("invalidInputProvider")
+    void allUserBaggageItemsNamesShouldReturnErrorResponseForInvalidUsername(String value) {
+        when(travelService.getUserBaggageItemsNames(value)).thenReturn(ResponseEntity.badRequest().build());
+
+        assertThat(restEndpoint.allUserBaggageItemsNames(value), matchesErrorResponse());
+
+        verify(travelService).getUserBaggageItemsNames(value);
     }
 
-    @Test
-    void allUserBaggageItemsNamesShouldReturnErrorResponseForEmptyUsername() {
-        assertThat(restEndpoint.allUserBaggageItemsNames(""), matchesErrorResponse());
+    @ParameterizedTest
+    @ArgumentsSource(UserArgumentsProvider.class)
+    void allUserBaggageItemsNamesShouldReturnBaggageNamesForUsername(String username) {
+        final Set<String> baggageItemsNames = getBaggageItemsNames(username);
+        when(travelService.getUserBaggageItemsNames(username)).thenReturn(ResponseEntity.ok(baggageItemsNames));
+
+        assertThat(restEndpoint.allUserBaggageItemsNames(username), matchesResponseStringsSet(baggageItemsNames));
+
+        verify(travelService).getUserBaggageItemsNames(username);
     }
 
-    @Test
-    void allUserBaggageItemsNamesShouldReturnErrorResponseForNotExistingUsername() {
-        assertThat(restEndpoint.allUserBaggageItemsNames("someuser"), matchesErrorResponse());
+    @ParameterizedTest
+    @MethodSource("invalidInputProvider")
+    void baggageItemShouldReturnErrorResponseForInvalidInput(String value) {
+        when(travelService.getBaggageItem(value)).thenReturn(ResponseEntity.badRequest().build());
+
+        assertThat(restEndpoint.baggageItem(value), matchesErrorResponse());
+
+        verify(travelService).getBaggageItem(value);
     }
 
-    @Test
-    void allUserBaggageItemsNamesShouldReturnBaggageNamesForUser1() {
-        String username = user1.getUsername();
-        assertThat(restEndpoint.allUserBaggageItemsNames(username), matchesResponse(getBaggageItemsNames(username)));
+    @ParameterizedTest
+    @ArgumentsSource(BaggageItemsArgumentsProvider.class)
+    void baggageItemShouldReturnCorrectDTOForEachExistingInput(String baggageItemName) {
+        final BaggageItemDTO baggageItem = getBaggageItem(baggageItemName);
+        when(travelService.getBaggageItem(baggageItemName)).thenReturn(ResponseEntity.ok(baggageItem));
+
+        assertThat(restEndpoint.baggageItem(baggageItemName), matchesResponseBaggageItem(baggageItem));
+
+        verify(travelService).getBaggageItem(baggageItemName);
     }
 
-    @Test
-    void allUserBaggageItemsNamesShouldReturnBaggageNamesForUser2() {
-        String username = user2.getUsername();
-        assertThat(restEndpoint.allUserBaggageItemsNames(username), matchesResponse(getBaggageItemsNames(username)));
+    @ParameterizedTest
+    @MethodSource("invalidInputProvider")
+    void allTravelPlansNamesShouldReturnErrorResponseForInvalidInput(String value) {
+        when(travelService.getUserTravelPlansNames(value)).thenReturn(ResponseEntity.badRequest().build());
+
+        assertThat(restEndpoint.allUserTravelPlansNames(value), matchesErrorResponse());
+
+        verify(travelService).getUserTravelPlansNames(value);
     }
 
-    private Matcher<ResponseEntity<Set<String>>> matchesErrorResponse() {
-        return new TypeSafeMatcher<ResponseEntity<Set<String>>>() {
+    @ParameterizedTest
+    @ArgumentsSource(UserArgumentsProvider.class)
+    void allTravelPlansNamesShouldReturnCorrectTravelPlansNamesForInput(String travelPlanName) {
+        final Set<String> travelPlansNames = getTravelPlansNames(travelPlanName);
+        when(travelService.getUserTravelPlansNames(travelPlanName)).thenReturn(ResponseEntity.ok(travelPlansNames));
 
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("Should return error response");
-            }
+        assertThat(restEndpoint.allUserTravelPlansNames(travelPlanName), matchesResponseStringsSet(travelPlansNames));
 
-            @Override
-            protected boolean matchesSafely(ResponseEntity<Set<String>> response) {
-                return response != null
-                        && response.getStatusCode() != null
-                        && response.getStatusCode().is4xxClientError();
-            }
-        };
+        verify(travelService).getUserTravelPlansNames(travelPlanName);
     }
 
-    private Matcher<ResponseEntity<Set<String>>> matchesResponse(final Set<String> list) {
+    @ParameterizedTest
+    @MethodSource("invalidInputProvider")
+    void travelPlanShouldReturnErrorResponseForInvalidInput(String value) {
+        when(travelService.getTravelPlan(value)).thenReturn(ResponseEntity.badRequest().build());
 
-        return new TypeSafeMatcher<ResponseEntity<Set<String>>>() {
+        assertThat(restEndpoint.travelPlan(value), matchesErrorResponse());
 
-            @Override
-            protected boolean matchesSafely(ResponseEntity<Set<String>> response) {
-                return HttpStatus.OK.equals(response.getStatusCode())
-                        && response.getBody() != null
-                        && response.getBody().size() == list.size()
-                        && response.getBody().containsAll(list);
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("Response should be OK and match the list: " + String.join(", ", list));
-            }
-        };
+        verify(travelService).getTravelPlan(value);
     }
+
+    @ParameterizedTest
+    @ArgumentsSource(TravelPlansArgumentsProvider.class)
+    void travelPlanShouldReturnCorrectDTOForEachExistingInput(String value) {
+        final TravelPlanDTO travelPlan = getTravelPlan(value);
+        when(travelService.getTravelPlan(value)).thenReturn(ResponseEntity.ok(travelPlan));
+
+        assertThat(restEndpoint.travelPlan(value), matchesResponseTravelPlan(travelPlan));
+
+        verify(travelService).getTravelPlan(value);
+    }
+
+    private static Stream<String> invalidInputProvider() {
+        return Stream.of(null, EMPTY_STRING, SOME_VALUE);
+    }
+
 }

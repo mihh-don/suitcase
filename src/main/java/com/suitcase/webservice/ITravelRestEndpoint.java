@@ -18,11 +18,11 @@ public interface ITravelRestEndpoint {
     ResponseEntity<Set<String>> allUserBaggageItemsNames(@PathVariable("username") @NotNull String username);
 
     @GetMapping("baggage-item/{baggageItemName}")
-    BaggageItemDTO baggageItem(@PathVariable("baggageItemName") @NotNull String baggageItemName);
+    ResponseEntity<BaggageItemDTO> baggageItem(@PathVariable("baggageItemName") @NotNull String baggageItemName);
 
     @GetMapping("/all-travel-plans-names/{username}")
-    List<String> allTravelPlansNames(@PathVariable("username") @NotNull String username);
+    ResponseEntity<Set<String>> allUserTravelPlansNames(@PathVariable("username") @NotNull String username);
 
     @GetMapping("/travel-plan/{travelPlanName}")
-    TravelPlanDTO travelPlan(@PathVariable("travelPlanName") @NotNull String travelPlanName);
+    ResponseEntity<TravelPlanDTO> travelPlan(@PathVariable("travelPlanName") @NotNull String travelPlanName);
 }

@@ -49,6 +49,10 @@ public class TravelBaggageItemDTO extends AbstractEntityDTO {
         return pieces;
     }
 
+    public void setPieces(BigInteger pieces) {
+        this.pieces = pieces;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,7 +69,35 @@ public class TravelBaggageItemDTO extends AbstractEntityDTO {
         return Objects.hash(getBaggageItem(), getBaggagePriority(), getBaggageStorageType(), getPieces());
     }
 
-    public void setPieces(BigInteger pieces) {
-        this.pieces = pieces;
+    public static class Builder {
+        private TravelBaggageItemDTO travelBaggageItemDTO;
+
+        public Builder() {
+            travelBaggageItemDTO = new TravelBaggageItemDTO();
+        }
+
+        public Builder withBaggageItem(BaggageItemDTO baggageItem) {
+            travelBaggageItemDTO.setBaggageItem(baggageItem);
+            return this;
+        }
+
+        public Builder withBaggagePriority(BaggageItemPriorityEnum baggagePriority) {
+            travelBaggageItemDTO.setBaggagePriority(baggagePriority);
+            return this;
+        }
+
+        public Builder withBaggageStorageType(TravelBaggageStorageTypeEnum baggageStorageType) {
+            travelBaggageItemDTO.setBaggageStorageType(baggageStorageType);
+            return this;
+        }
+
+        public Builder withPieces(BigInteger pieces) {
+            travelBaggageItemDTO.setPieces(pieces);
+            return this;
+        }
+
+        public TravelBaggageItemDTO build() {
+            return travelBaggageItemDTO;
+        }
     }
 }
