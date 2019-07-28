@@ -19,6 +19,8 @@ import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static com.suitcase.utils.TransportRestEndpointImplHelper.buildTransportCarrier;
+
 // TODO add this class only to the test classes, after the persistence layer is implemented
 public final class TravelRestEndpointImplHelper {
 
@@ -309,15 +311,6 @@ public final class TravelRestEndpointImplHelper {
                 .withTravelClass(TravelClassEnum.ECONOMY)
                 .withSequence(sequence)
                 .withTransportCarrier(transportCarrier)
-                .build();
-    }
-
-    private static TransportCarrierDTO buildTransportCarrier(final String name, final TransportMeansEnum transportMean) {
-        return new TransportCarrierDTO.Builder()
-                .withAllTravelClasses(EnumSet.allOf(TravelClassEnum.class))
-                .withName(name)
-                .withMeanOfTransport(transportMean)
-                //.withBaggagePolicies()
                 .build();
     }
 }

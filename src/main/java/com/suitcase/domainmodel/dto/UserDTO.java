@@ -73,6 +73,11 @@ public class UserDTO extends AbstractEntityDTO {
         return Optional.ofNullable(baggageItems).orElseGet(Collections::emptySet).stream().map(BaggageItemDTO::getName).collect(Collectors.toSet());
     }
 
+    @JsonIgnore
+    public Set<String> getTravelPlansNames() {
+        return Optional.ofNullable(travelPlans).orElseGet(Collections::emptySet).stream().map(TravelPlanDTO::getName).collect(Collectors.toSet());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -7,7 +7,6 @@ import com.suitcase.utils.BaggageItemsArgumentsProvider;
 import com.suitcase.utils.TravelPlansArgumentsProvider;
 import com.suitcase.utils.UserArgumentsProvider;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,22 +15,16 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import static com.suitcase.utils.ResponseEntityMatchers.*;
 import static com.suitcase.utils.TravelRestEndpointImplHelper.*;
+import static com.suitcase.utils.UserArgumentsProvider.INVALID_INPUT_PROVIDER;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class TravelRestEndpointImplTest {
-
-    private static final String SOME_USER = "someuser";
-    private static final String SOME_BAGGAGE = "somebaggage";
-    private static final String SOME_VALUE = "somevalue";
-    private static final String EMPTY_STRING = "";
 
     @Mock
     private TravelService travelService;
@@ -45,7 +38,7 @@ class TravelRestEndpointImplTest {
     }
 
     @ParameterizedTest
-    @MethodSource("invalidInputProvider")
+    @MethodSource(INVALID_INPUT_PROVIDER)
     void allUserBaggageItemsNamesShouldReturnErrorResponseForInvalidUsername(String value) {
         when(travelService.getUserBaggageItemsNames(value)).thenReturn(ResponseEntity.badRequest().build());
 
@@ -66,7 +59,7 @@ class TravelRestEndpointImplTest {
     }
 
     @ParameterizedTest
-    @MethodSource("invalidInputProvider")
+    @MethodSource(INVALID_INPUT_PROVIDER)
     void baggageItemShouldReturnErrorResponseForInvalidInput(String value) {
         when(travelService.getBaggageItem(value)).thenReturn(ResponseEntity.badRequest().build());
 
@@ -87,7 +80,7 @@ class TravelRestEndpointImplTest {
     }
 
     @ParameterizedTest
-    @MethodSource("invalidInputProvider")
+    @MethodSource(INVALID_INPUT_PROVIDER)
     void allTravelPlansNamesShouldReturnErrorResponseForInvalidInput(String value) {
         when(travelService.getUserTravelPlansNames(value)).thenReturn(ResponseEntity.badRequest().build());
 
@@ -98,17 +91,17 @@ class TravelRestEndpointImplTest {
 
     @ParameterizedTest
     @ArgumentsSource(UserArgumentsProvider.class)
-    void allTravelPlansNamesShouldReturnCorrectTravelPlansNamesForInput(String travelPlanName) {
-        final Set<String> travelPlansNames = getTravelPlansNames(travelPlanName);
-        when(travelService.getUserTravelPlansNames(travelPlanName)).thenReturn(ResponseEntity.ok(travelPlansNames));
+    void allTravelPlansNamesShouldReturnCorrectTravelPlansNamesForInput(String username) {
+        final Set<String> travelPlansNames = getTravelPlansNames(username);
+        when(travelService.getUserTravelPlansNames(username)).thenReturn(ResponseEntity.ok(travelPlansNames));
 
-        assertThat(restEndpoint.allUserTravelPlansNames(travelPlanName), matchesResponseStringsSet(travelPlansNames));
+        assertThat(restEndpoint.allUserTravelPlansNames(username), matchesResponseStringsSet(travelPlansNames));
 
-        verify(travelService).getUserTravelPlansNames(travelPlanName);
+        verify(travelService).getUserTravelPlansNames(username);
     }
 
     @ParameterizedTest
-    @MethodSource("invalidInputProvider")
+    @MethodSource(INVALID_INPUT_PROVIDER)
     void travelPlanShouldReturnErrorResponseForInvalidInput(String value) {
         when(travelService.getTravelPlan(value)).thenReturn(ResponseEntity.badRequest().build());
 
@@ -126,10 +119,6 @@ class TravelRestEndpointImplTest {
         assertThat(restEndpoint.travelPlan(value), matchesResponseTravelPlan(travelPlan));
 
         verify(travelService).getTravelPlan(value);
-    }
-
-    private static Stream<String> invalidInputProvider() {
-        return Stream.of(null, EMPTY_STRING, SOME_VALUE);
     }
 
 }

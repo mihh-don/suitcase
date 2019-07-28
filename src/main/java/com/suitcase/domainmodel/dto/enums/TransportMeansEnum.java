@@ -10,7 +10,8 @@ public enum TransportMeansEnum {
     BUS("bus"),
     TRUCK("truck"),
     MOTORCYCLE("motorcycle"),
-    BICYCLE("bicycle"),
+    BICYCLE("bicycle & e-bike"),
+    SCOOTER("scooter & e-scooter"),
     BY_FOOT("by foot"),
     OTHER("other");
 
