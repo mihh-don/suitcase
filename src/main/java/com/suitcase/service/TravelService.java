@@ -4,15 +4,19 @@ import com.suitcase.domainmodel.dto.UserDTO;
 import com.suitcase.domainmodel.dto.baggage.BaggageItemDTO;
 import com.suitcase.domainmodel.dto.travel.TravelPlanDTO;
 import com.suitcase.exception.InvalidInputException;
+import com.suitcase.utils.CustomResponse;
 import com.suitcase.utils.ResponseErrorGenerator;
+import com.suitcase.utils.TransportRestEndpointImplHelper;
 import com.suitcase.utils.TravelRestEndpointImplHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Set;
 
+@Service
 public class TravelService {
 
     private final List<UserDTO> users;
@@ -28,53 +32,53 @@ public class TravelService {
         travelPlans = TravelRestEndpointImplHelper.getAllTravelPlans();
     }
 
-    public ResponseEntity<Set<String>> getUserBaggageItemsNames(String username) {
+    public CustomResponse<Set<String>> getUserBaggageItemsNames(String username) {
         try {
             checkValue(username);
-            return ResponseEntity.ok(users.stream().filter(userDTO -> username.equals(userDTO.getUsername()))
+            return CustomResponse.ok(users.stream().filter(userDTO -> username.equals(userDTO.getUsername()))
                     .findAny()
                     .orElseThrow(() -> new InvalidInputException("User not found"))
-                    .getBaggageItemsNames());
+                    .getBaggageItemsNames(), TransportRestEndpointImplHelper.OK);
 
         } catch (InvalidInputException ex) {
-            return ResponseErrorGenerator.generateErrorResponse(ex.getMessage());
+            return ResponseErrorGenerator.generateNotFoundError(ex.getMessage());
         }
     }
 
-    public ResponseEntity<BaggageItemDTO> getBaggageItem(final String baggageItemName) {
+    public CustomResponse<BaggageItemDTO> getBaggageItem(final String baggageItemName) {
         try {
             checkValue(baggageItemName);
-            return ResponseEntity.ok(baggageItems.stream()
+            return CustomResponse.ok(baggageItems.stream()
                     .filter(baggageItemDTO -> baggageItemDTO.getName().equals(baggageItemName))
                     .findAny()
                     .orElseThrow(() -> new InvalidInputException("Baggage item not found")));
         } catch (InvalidInputException ex) {
-            return ResponseErrorGenerator.generateErrorResponse(ex.getMessage());
+            return ResponseErrorGenerator.generateNotFoundError(ex.getMessage());
         }
     }
 
-    public ResponseEntity<Set<String>> getUserTravelPlansNames(final String username) {
+    public CustomResponse<Set<String>> getUserTravelPlansNames(final String username) {
         try {
             checkValue(username);
-            return ResponseEntity.ok(users.stream()
+            return CustomResponse.ok(users.stream()
                     .filter(userDTO -> userDTO.getUsername().equals(username))
                     .findAny()
                     .orElseThrow(() -> new InvalidInputException("User not found"))
                     .getTravelPlansNames());
         } catch (InvalidInputException ex) {
-            return ResponseErrorGenerator.generateErrorResponse(ex.getMessage());
+            return ResponseErrorGenerator.generateNotFoundError(ex.getMessage());
         }
     }
 
-    public ResponseEntity<TravelPlanDTO> getTravelPlan(final String travelPlanName) {
+    public CustomResponse<TravelPlanDTO> getTravelPlan(final String travelPlanName) {
         try {
             checkValue(travelPlanName);
-            return ResponseEntity.ok(travelPlans.stream()
+            return CustomResponse.ok(travelPlans.stream()
                     .filter(travelPlanDTO -> travelPlanDTO.getName().equals(travelPlanName))
                     .findAny()
                     .orElseThrow(() -> new InvalidInputException("Travel plan not found")));
         } catch (InvalidInputException ex) {
-            return ResponseErrorGenerator.generateErrorResponse(ex.getMessage());
+            return ResponseErrorGenerator.generateNotFoundError(ex.getMessage());
         }
     }
 

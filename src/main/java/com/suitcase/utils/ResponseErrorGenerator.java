@@ -1,6 +1,6 @@
 package com.suitcase.utils;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 public final class ResponseErrorGenerator {
 
@@ -8,7 +8,11 @@ public final class ResponseErrorGenerator {
 
     }
 
-    public static <T> CustomResponseEntity<T> generateErrorResponse(final String errorMessage) {
-        return new CustomResponseEntity<>(HttpStatus.BAD_REQUEST, errorMessage);
+    public static <T> CustomResponse<T> generateNotFoundError(final String errorMessage) {
+        return CustomResponse.notFound(errorMessage);
+    }
+
+    public static <T> ResponseEntity<T> generateErrorResponse(final String errorMessage) {
+        return ResponseEntity.badRequest().build();
     }
 }

@@ -13,9 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Set;
-import java.util.stream.Stream;
 
-import static com.suitcase.utils.ResponseEntityMatchers.*;
+import static com.suitcase.utils.CustomResponseMatchers.*;
 import static com.suitcase.utils.TravelRestEndpointImplHelper.*;
 import static com.suitcase.utils.UserArgumentsProvider.INVALID_INPUT_PROVIDER;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -36,7 +35,7 @@ class TravelServiceTest {
     @ParameterizedTest
     @MethodSource(INVALID_INPUT_PROVIDER)
     void getUserBaggageItemsNamesShouldReturnErrorResponseForInvalidUsername(String value) {
-        assertThat(travelService.getUserBaggageItemsNames(null), matchesErrorResponse());
+        assertThat(travelService.getUserBaggageItemsNames(null), matchesCustomErrorResponse());
     }
 
     @ParameterizedTest

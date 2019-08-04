@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.ZonedDateTime;
 import java.util.*;
-import java.util.stream.Stream;
 
 import static com.suitcase.utils.TransportRestEndpointImplHelper.buildTransportCarrier;
 
@@ -25,8 +24,8 @@ import static com.suitcase.utils.TransportRestEndpointImplHelper.buildTransportC
 public final class TravelRestEndpointImplHelper {
 
     private static final double WEIGHT_VALUE = 3.03;
-    private static final String USER01 = "userone";
-    private static final String USER02 = "usertwo";
+    private static final String USER01 = "mihh";
+    private static final String USER02 = "ley";
     private static final String SMTH01 = "something_1";
     private static final String SMTH02 = "something_2";
     private static final String BAGGAGE_01 = "Toffifee";

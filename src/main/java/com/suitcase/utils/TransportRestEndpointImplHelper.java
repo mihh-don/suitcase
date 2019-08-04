@@ -27,6 +27,7 @@ public class TransportRestEndpointImplHelper {
     private static final BigDecimal ONE = BigDecimal.ONE;
     private static final int MAX_DIMENSIONS_SUM = 158;
     private static final double MAX_ITEM_VOLUME = 0.1;
+    public static final String OK = "OK";
 
     private static TransportCarrierDTO bicycle;
     private static TransportCarrierDTO train;

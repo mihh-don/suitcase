@@ -9,18 +9,15 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Set;
 
-import static com.suitcase.utils.ResponseEntityMatchers.*;
+import static com.suitcase.utils.CustomResponseMatchers.*;
 import static com.suitcase.utils.TransportRestEndpointImplHelper.getAllTransportCarrierNames;
 import static com.suitcase.utils.TransportRestEndpointImplHelper.getBaggagePolicies;
 import static com.suitcase.utils.UserArgumentsProvider.INVALID_INPUT_PROVIDER;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 class TransportServiceTest {
 

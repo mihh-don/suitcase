@@ -6,7 +6,7 @@
     <property name="driver" value="com.mysql.cj.jdbc.Driver" />
     <property name="datasourceUrl" value="jdbc:mysql://mysql:3306/suitcase" />
     <property name="user" value="user" />
-    <property name="password" value="myUser" />
+    <property name="password" value="my$0User" />
 
     <appender name="RollingFile"
               class="ch.qos.logback.core.rolling.RollingFileAppender">

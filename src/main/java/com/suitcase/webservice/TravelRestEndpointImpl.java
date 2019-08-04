@@ -3,8 +3,8 @@ package com.suitcase.webservice;
 import com.suitcase.domainmodel.dto.baggage.BaggageItemDTO;
 import com.suitcase.domainmodel.dto.travel.TravelPlanDTO;
 import com.suitcase.service.TravelService;
+import com.suitcase.utils.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -25,22 +25,22 @@ public class TravelRestEndpointImpl implements ITravelRestEndpoint {
     }
 
     @Override
-    public ResponseEntity<Set<String>> allUserBaggageItemsNames(final String username) {
+    public CustomResponse<Set<String>> allUserBaggageItemsNames(final String username) {
         return travelService.getUserBaggageItemsNames(username);
     }
 
     @Override
-    public ResponseEntity<BaggageItemDTO> baggageItem(@NotNull final String baggageItemName) {
+    public CustomResponse<BaggageItemDTO> baggageItem(@NotNull final String baggageItemName) {
         return travelService.getBaggageItem(baggageItemName);
     }
 
     @Override
-    public ResponseEntity<Set<String>> allUserTravelPlansNames(@NotNull final String username) {
+    public CustomResponse<Set<String>> allUserTravelPlansNames(@NotNull final String username) {
         return travelService.getUserTravelPlansNames(username);
     }
 
     @Override
-    public ResponseEntity<TravelPlanDTO> travelPlan(@NotNull final String travelPlanName) {
+    public CustomResponse<TravelPlanDTO> travelPlan(@NotNull final String travelPlanName) {
         return travelService.getTravelPlan(travelPlanName);
     }
 }

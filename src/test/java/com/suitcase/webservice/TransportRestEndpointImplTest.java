@@ -1,11 +1,9 @@
 package com.suitcase.webservice;
 
-import com.suitcase.domainmodel.dto.baggage.BaggageItemDTO;
 import com.suitcase.domainmodel.dto.transport.TransportCarrierBaggagePolicyDTO;
 import com.suitcase.service.TransportService;
-import com.suitcase.utils.BaggageItemsArgumentsProvider;
+import com.suitcase.utils.CustomResponse;
 import com.suitcase.utils.TransportCarriersArgumentsProvider;
-import com.suitcase.utils.UserArgumentsProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,18 +16,17 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Set;
 
-import static com.suitcase.utils.ResponseEntityMatchers.*;
+import static com.suitcase.utils.CustomResponseMatchers.*;
 import static com.suitcase.utils.TransportRestEndpointImplHelper.getAllTransportCarrierNames;
 import static com.suitcase.utils.TransportRestEndpointImplHelper.getBaggagePolicies;
-import static com.suitcase.utils.TravelRestEndpointImplHelper.getBaggageItem;
-import static com.suitcase.utils.TravelRestEndpointImplHelper.getBaggageItemsNames;
 import static com.suitcase.utils.UserArgumentsProvider.INVALID_INPUT_PROVIDER;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class TransportRestEndpointImplTest {
+
+    private static final String BAD_REQUEST_MESSAGE = "Bad Request";
 
     @Mock
     private TransportService transportService;
@@ -45,7 +42,7 @@ class TransportRestEndpointImplTest {
     @Test
     void allTransportCarrierNamesShouldReturnAllStoredNames() {
         final Set<String> transportCarrierNames = getAllTransportCarrierNames();
-        when(transportService.getAllTransportCarrierNames()).thenReturn(ResponseEntity.ok(transportCarrierNames));
+        when(transportService.getAllTransportCarrierNames()).thenReturn(CustomResponse.ok(transportCarrierNames));
 
         assertThat(restEndpoint.allTransportCarrierNames(), matchesResponseStringsSet(transportCarrierNames));
 
@@ -55,7 +52,7 @@ class TransportRestEndpointImplTest {
     @ParameterizedTest
     @MethodSource(INVALID_INPUT_PROVIDER)
     void baggagePoliciesShouldReturnErrorResponseForInvalidUsername(String value) {
-        when(transportService.getBaggagePolicies(value)).thenReturn(ResponseEntity.badRequest().build());
+        when(transportService.getBaggagePolicies(value)).thenReturn(CustomResponse.badRequest(BAD_REQUEST_MESSAGE));
 
         assertThat(restEndpoint.baggagePolicies(value), matchesErrorResponse());
 
@@ -66,7 +63,7 @@ class TransportRestEndpointImplTest {
     @ArgumentsSource(TransportCarriersArgumentsProvider.class)
     void baggagePoliciesShouldReturnCorrectDTOsForEachExistingInput(String transportCarrierName) {
         final Set<TransportCarrierBaggagePolicyDTO> baggagePolicies = getBaggagePolicies(transportCarrierName);
-        when(transportService.getBaggagePolicies(transportCarrierName)).thenReturn(ResponseEntity.ok(baggagePolicies));
+        when(transportService.getBaggagePolicies(transportCarrierName)).thenReturn(CustomResponse.ok(baggagePolicies));
 
         assertThat(restEndpoint.baggagePolicies(transportCarrierName), matchesResponseBaggagePoliciesSet(baggagePolicies));
 
