@@ -7,6 +7,7 @@ import com.suitcase.domainmodel.dto.transport.TransportCarrierBaggagePolicyDTO;
 import com.suitcase.domainmodel.dto.transport.TransportCarrierDTO;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -148,7 +149,7 @@ public class TransportRestEndpointImplHelper {
                 .withDescription("Passengers of Economy class are allowed with only one check-in baggage")
                 .withTravelClass(TravelClassEnum.ECONOMY)
                 .withBaggagePolicyType(BaggagePolicyTypeEnum.BAGGAGE_STORAGE_TYPE_POLICY)
-                .withBaggagePolicyAllowance(buildBaggageAllowanceMaxAmount(ONE))
+                .withBaggagePolicyAllowance(buildBaggageAllowanceMaxAmount(BigInteger.ONE))
                 .withBaggagePolicyItemsAmountType(BaggagePolicyItemsAmountTypeEnum.ALL)
                 .withStorageType(TravelBaggageStorageTypeEnum.CHECKIN_BAGGAGE)
                 .withSequence(sequence)
@@ -163,10 +164,10 @@ public class TransportRestEndpointImplHelper {
                 .build();
     }
 
-    private static BaggagePolicyAllowanceDTO buildBaggageAllowanceMaxAmount(final BigDecimal maxValue) {
+    private static BaggagePolicyAllowanceDTO buildBaggageAllowanceMaxAmount(final BigInteger maxValue) {
         return new BaggagePolicyAllowanceDTO.Builder()
                 .withBaggagePolicyAllowanceType(BaggagePolicyAllowanceTypeEnum.LIMITED_AMOUNT)
-                .withMaximumAllowedVolume(maxValue)
+                .withMaximumAllowedAmount(maxValue)
                 .withDescription("Maximum allowed amount of items")
                 .build();
     }
