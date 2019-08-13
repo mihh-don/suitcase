@@ -17,7 +17,6 @@ import static com.suitcase.utils.TransportRestEndpointImplHelper.getAllTransport
 import static com.suitcase.utils.TransportRestEndpointImplHelper.getBaggagePolicies;
 import static com.suitcase.utils.UserArgumentsProvider.INVALID_INPUT_PROVIDER;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.verify;
 
 class TransportServiceTest {
 

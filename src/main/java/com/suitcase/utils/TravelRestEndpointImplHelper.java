@@ -67,14 +67,14 @@ public final class TravelRestEndpointImplHelper {
         allBaggageItems.addAll(baggageItemsSetUserOne);
         allBaggageItems.addAll(baggageItemsSetUserTwo);
 
+        bicycle = buildTransportCarrier("Cannondale", TransportMeansEnum.BICYCLE);
+        train = buildTransportCarrier("OEBB", TransportMeansEnum.TRAIN);
+        runner = buildTransportCarrier("Mihh", TransportMeansEnum.BY_FOOT);
+
         userOneTravelPlansSet = buildUserOneTravelPlansSet();
         userTwoTravelPlansSet = buildUserTwoTravelPlansSet();
         allTravelPlans.addAll(userOneTravelPlansSet);
         allTravelPlans.addAll(userTwoTravelPlansSet);
-
-        bicycle = buildTransportCarrier("Cannondale", TransportMeansEnum.BICYCLE);
-        train = buildTransportCarrier("OEBB", TransportMeansEnum.TRAIN);
-        runner = buildTransportCarrier("Mihh", TransportMeansEnum.BY_FOOT);
     }
 
     public static Set<String> getBaggageItemsNames(final String username) {

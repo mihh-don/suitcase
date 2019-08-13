@@ -4,7 +4,6 @@ import com.suitcase.domainmodel.dto.transport.TransportCarrierBaggagePolicyDTO;
 import com.suitcase.service.TransportService;
 import com.suitcase.utils.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.RequestScope;
 

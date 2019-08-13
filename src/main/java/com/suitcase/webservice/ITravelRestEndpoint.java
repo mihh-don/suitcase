@@ -3,7 +3,6 @@ package com.suitcase.webservice;
 import com.suitcase.domainmodel.dto.baggage.BaggageItemDTO;
 import com.suitcase.domainmodel.dto.travel.TravelPlanDTO;
 import com.suitcase.utils.CustomResponse;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

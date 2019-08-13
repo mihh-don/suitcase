@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Set;
 

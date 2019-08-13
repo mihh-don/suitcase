@@ -1,7 +1,6 @@
 package com.suitcase.domainmodel.dto.travel;
 
 import com.suitcase.domainmodel.dto.AbstractEntityDTO;
-import com.suitcase.domainmodel.dto.UserDTO;
 
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
@@ -12,7 +11,7 @@ public class TravelPlanDTO extends AbstractEntityDTO {
     @NotNull
     private String name;
     @NotNull
-    private UserDTO user;
+    private String user;
     // all the items which are taken within this Travel Plan
     private Set<TravelBaggageItemDTO> travelBaggageItems;
     private TravelDetailsDTO travelDetails;
@@ -33,11 +32,11 @@ public class TravelPlanDTO extends AbstractEntityDTO {
         this.travelBaggageItems = travelBaggageItems;
     }
 
-    public UserDTO getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(UserDTO user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
@@ -85,7 +84,7 @@ public class TravelPlanDTO extends AbstractEntityDTO {
             return this;
         }
 
-        public Builder withUser(UserDTO user) {
+        public Builder withUser(String user) {
             travelPlanDTO.setUser(user);
             return this;
         }

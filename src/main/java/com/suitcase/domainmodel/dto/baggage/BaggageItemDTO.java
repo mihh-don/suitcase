@@ -1,14 +1,12 @@
 package com.suitcase.domainmodel.dto.baggage;
 
 import com.suitcase.domainmodel.dto.AbstractEntityDTO;
-import com.suitcase.domainmodel.dto.UserDTO;
 import com.suitcase.domainmodel.dto.color.ColorDTO;
 import com.suitcase.domainmodel.dto.enums.BaggageItemCategoryEnum;
 import com.suitcase.domainmodel.dto.enums.BaggageItemPriorityEnum;
 import com.suitcase.domainmodel.dto.enums.BaggageItemTypeEnum;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
@@ -29,8 +27,7 @@ public class BaggageItemDTO extends AbstractEntityDTO {
     private BigInteger pieces;
     private ColorDTO color;
     @NotNull
-    @Size(min = 1)
-    private Set<UserDTO> owners;
+    private Set<String> owners;
 
     public BaggageItemDTO() {
         name = "";
@@ -40,11 +37,11 @@ public class BaggageItemDTO extends AbstractEntityDTO {
         owners = new HashSet<>();
     }
 
-    public Set<UserDTO> getOwners() {
+    public Set<String> getOwners() {
         return owners;
     }
 
-    public void addOwner(UserDTO owner) {
+    public void addOwner(String owner) {
         this.owners.add(owner);
     }
 
@@ -146,7 +143,7 @@ public class BaggageItemDTO extends AbstractEntityDTO {
             baggageItemDTO = new BaggageItemDTO();
         }
 
-        public Builder withOwners(Set<UserDTO> owners) {
+        public Builder withOwners(Set<String> owners) {
             Optional.ofNullable(owners).orElseGet(Collections::emptySet).forEach(baggageItemDTO::addOwner);
             return this;
         }
