@@ -11,4 +11,4 @@ Let's take it step by step...
 
 
 
-** GNU GPLv2 License is provided for this project **
+
